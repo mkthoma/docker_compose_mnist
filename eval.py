@@ -43,10 +43,10 @@ def main():
         "--seed", type=int, default=1, metavar="S", help="random seed (default: 1)"
     )
     parser.add_argument(
-        "--checkpoint", default="/app/mnist/mnist_cnn.pt", help="path to the saved checkpoint"
+        "--checkpoint", default="/opt/mount/model/mnist_cnn.pt", help="path to the saved checkpoint"
     )
     parser.add_argument(
-        "--save-dir", default="/app/mnist", help="directory where evaluation results will be saved"
+        "--save-dir", default="/opt/mount", help="directory where evaluation results will be saved"
     )
     parser.add_argument(
         "--device", default="cpu", help="Device to run the evaluation on (default: cpu)"
@@ -71,7 +71,7 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
     ])
-    test_dataset = datasets.MNIST('./mnist_data', train=False, download=True, transform=transform)
+    test_dataset = datasets.MNIST('/opt/mount/data', train=False, download=False, transform=transform)
     test_loader = DataLoader(test_dataset, **kwargs)
 
     # Initialize the model
@@ -90,7 +90,7 @@ def main():
     eval_results = test_epoch(model, test_loader, device)
 
     # Save the evaluation results to JSON
-    eval_results_path = Path(args.save_dir) / "eval_results.json"
+    eval_results_path = Path(args.save_dir) / "model/eval_results.json"
     eval_results_path.parent.mkdir(parents=True, exist_ok=True)  # Ensure directory exists
     with eval_results_path.open("w") as f:
         json.dump(eval_results, f)

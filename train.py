@@ -126,7 +126,7 @@ def main():
     ])
 
     # Load the MNIST dataset
-    train_dataset = datasets.MNIST('./mnist_data', train=True, download=True, transform=transform)
+    train_dataset = datasets.MNIST('/opt/mount/data', train=True, download=True, transform=transform)
 
     # DataLoader settings
     kwargs = {
@@ -147,7 +147,7 @@ def main():
         p.join()
 
     # Define the hardcoded checkpoint path
-    checkpoint_path = "/app/mnist/mnist_cnn.pt"
+    checkpoint_path = "/opt/mount/model/mnist_cnn.pt"
 
     # Save the model checkpoint to the mounted volume directory
     torch.save(model.state_dict(), checkpoint_path)

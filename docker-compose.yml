@@ -4,21 +4,22 @@ services:
     build: .
     command: python train.py
     volumes:
-      - mnist:/app/mnist
+      - mnist:/opt/mount
 
   evaluate:
     build: .
     command: python eval.py
     volumes:
-      - mnist:/app/mnist
+      - mnist:/opt/mount
 
   infer:
     build: .
     command: python infer.py
     volumes:
-      - mnist:/app/mnist
+      - mnist:/opt/mount
     depends_on:
       - evaluate
 
 volumes:
   mnist:
+    driver: local

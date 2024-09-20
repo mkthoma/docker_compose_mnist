@@ -32,10 +32,10 @@ def infer(model, dataset, save_dir, device, num_samples=5):
 
 def main():
     # Define the directory to save results
-    save_dir = "/app/mnist"
+    save_dir = "/opt/mount"
 
     # Load the trained model checkpoint
-    checkpoint_path = "/app/mnist/mnist_cnn.pt"
+    checkpoint_path = "/opt/mount/model/mnist_cnn.pt"
 
     # Initialize the model and load the state_dict
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -55,7 +55,7 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
     ])
-    test_dataset = datasets.MNIST('./mnist_data', train=False, download=True, transform=transform)
+    test_dataset = datasets.MNIST('/opt/mount/data', train=False, download=False, transform=transform)
 
     # Perform inference
     infer(model, test_dataset, save_dir, device)
