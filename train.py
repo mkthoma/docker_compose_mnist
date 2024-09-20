@@ -146,8 +146,13 @@ def main():
     for p in processes:
         p.join()
 
-    # Define the hardcoded checkpoint path
-    checkpoint_path = "/opt/mount/model/mnist_cnn.pt"
+
+    # Define the checkpoint path
+    checkpoint_dir = "/opt/mount/model"
+    checkpoint_path = f"{checkpoint_dir}/mnist_cnn.pt"
+
+    # Create the directory if it doesn't exist
+    Path(checkpoint_dir).mkdir(parents=True, exist_ok=True)
 
     # Save the model checkpoint to the mounted volume directory
     torch.save(model.state_dict(), checkpoint_path)
