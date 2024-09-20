@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  train:
+    build: .
+    command: python train.py
+    volumes:
+      - mnist:/app/mnist
+
+  evaluate:
+    build: .
+    command: python eval.py
+    volumes:
+      - mnist:/app/mnist
+
+  infer:
+    build: .
+    command: python infer.py
+    volumes:
+      - mnist:/app/mnist
+    depends_on:
+      - evaluate
+
+volumes:
+  mnist:
